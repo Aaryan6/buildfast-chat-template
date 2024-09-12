@@ -39,6 +39,9 @@ export default function PromptBox({
 
   const handleSubmitWithAttachments = (e: any) => {
     e.preventDefault();
+    // setTimeout(() => {
+    //   setIsThinking && setIsThinking(true);
+    // }, 1500);
     handleSubmit(e, {
       experimental_attachments: files,
     });
@@ -48,9 +51,6 @@ export default function PromptBox({
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    setTimeout(() => {
-      setIsThinking && setIsThinking(true);
-    }, 1500);
   };
 
   useEffect(() => {

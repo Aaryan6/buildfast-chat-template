@@ -1,20 +1,20 @@
 import { convertToCoreMessages, streamText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createCohere } from "@ai-sdk/cohere";
 
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = process.env.COHERE_API_KEY;
 if (!apiKey) {
-  throw Error("OpenAI Api Key not set");
+  throw Error("Cohere Api Key not set");
 }
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const cohere = createCohere({
+  apiKey: process.env.COHERE_API_KEY,
 });
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-4o-mini"),
+    model: cohere("command-r-plus-latest"),
     messages: convertToCoreMessages(messages),
     system: ``,
     async onFinish(event) {
@@ -22,5 +22,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toAIStreamResponse();
+  return result.toDataStreamResponse();
 }

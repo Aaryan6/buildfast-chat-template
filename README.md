@@ -42,6 +42,28 @@ Key directories:
 - `/src/utils`: Helper functions
 - `/src/scripts`: Scripts for data processing and embeddings generation
 
+## Models Snippets
+
+- `/openai`:
+  - src/actions/models/openai/server.ts
+  - src/actions/models/openai/route.ts
+- `/perplexity`:
+  - src/actions/models/perplexity/server.ts
+  - src/actions/models/perplexity/route.ts
+- `/groq`:
+  - src/actions/models/groq/server.ts
+- `/anthropic`:
+  - src/actions/models/anthropic/server.ts
+- `/cohere`:
+  - src/actions/models/cohere/server.ts
+  - src/actions/models/cohere/route.ts
+- `/google`:
+  - src/actions/models/google/server.ts
+  - src/actions/models/google/route.ts
+- `/mistral`:
+  - src/actions/models/mistral/server.ts
+  - src/actions/models/mistral/route.ts
+
 ## Core Components
 
 1. **Chat Component**: The main interface for user interactions with bots.

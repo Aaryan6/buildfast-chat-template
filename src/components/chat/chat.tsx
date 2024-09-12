@@ -30,6 +30,7 @@ export default function Chat({ id, initialMessages, appInfo }: ChatProps) {
     },
     onResponse(response) {
       if (response.status == 200) {
+        console.log(response);
         setIsThinking(false);
       }
     },

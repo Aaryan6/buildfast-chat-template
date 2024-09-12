@@ -1,20 +1,20 @@
 import { convertToCoreMessages, streamText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
 
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = process.env.ANTHROPIC_API_KEY;
 if (!apiKey) {
-  throw Error("OpenAI Api Key not set");
+  throw Error("Anthropic Api Key not set");
 }
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const anthropic = createAnthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-4o-mini"),
+    model: anthropic("claude-3-5-sonnet-20240620"),
     messages: convertToCoreMessages(messages),
     system: ``,
     async onFinish(event) {
@@ -22,5 +22,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toAIStreamResponse();
+  return result.toDataStreamResponse();
 }

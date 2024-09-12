@@ -1,20 +1,21 @@
 import { convertToCoreMessages, streamText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = process.env.GROQ_API_KEY;
 if (!apiKey) {
-  throw Error("OpenAI Api Key not set");
+  throw Error("Groq Api Key not set");
 }
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const groq = createOpenAI({
+  baseURL: "https://api.groq.com/openai/v1",
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-4o-mini"),
+    model: groq("llama3-8b-8192"),
     messages: convertToCoreMessages(messages),
     system: ``,
     async onFinish(event) {
@@ -22,5 +23,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toAIStreamResponse();
+  return result.toDataStreamResponse();
 }

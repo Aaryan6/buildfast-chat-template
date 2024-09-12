@@ -1,20 +1,21 @@
 import { convertToCoreMessages, streamText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = process.env.PERPLEXITY_API_KEY;
 if (!apiKey) {
-  throw Error("OpenAI Api Key not set");
+  throw Error("Perplexity Api Key not set");
 }
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const perplexity = createOpenAI({
+  apiKey: process.env.PERPLEXITY_API_KEY ?? "",
+  baseURL: "https://api.perplexity.ai/",
 });
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-4o-mini"),
+    model: perplexity("llama-3-sonar-large-32k-online"),
     messages: convertToCoreMessages(messages),
     system: ``,
     async onFinish(event) {
@@ -22,5 +23,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toAIStreamResponse();
+  return result.toDataStreamResponse();
 }
